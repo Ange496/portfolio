@@ -301,7 +301,7 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.07); background: rgba(250,250
         objets intelligents et interfaces homme-machine. Basé en Côte d'Ivoire, disponible à l'international.
       </p>
       <div class="hero-actions">
-        <a href="#" class="btn btn-yellow" id="downloadCvBtn">
+        <a href="doc/CV_Ange_Adje.pdf" class="btn btn-yellow" id="downloadCvBtn">
           Télécharger CV
           <span class="btn-icon"><i class="fa-solid fa-arrow-down" style="font-size:10px"></i></span>
         </a>
@@ -349,7 +349,7 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.07); background: rgba(250,250
     <div class="section-label">Mon histoire</div>
     <div class="section-title">Qui suis-<span>je</span> ?</div>
     <div class="detail-photo">
-      <img src="images/photo.jpeg" alt="ANGE ADJE" loading="lazy">
+      <img src="images/phto.png" alt="ANGE ADJE" loading="lazy">
       <div class="photo-caption"><i class="fa-solid fa-location-dot"></i> Abidjan, Côte d'Ivoire 🇨🇮</div>
     </div>
   </div>
@@ -509,7 +509,7 @@ document.getElementById('phoneCopy').addEventListener('click', () => navigator.c
 document.getElementById('downloadCvBtn').addEventListener('click', e => {
   e.preventDefault();
   const a = document.createElement('a');
-  a.href = 'files/CV_Ange_Adje.pdf';
+  a.href = 'doc/CV_Ange_Adje.pdf';
   a.download = 'CV_Ange_Adje_Developpeur.pdf';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   showToast('Téléchargement du CV lancé !');
