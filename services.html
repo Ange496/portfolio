@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Services d'Ange Adje — Développement mobile, IoT, systèmes embarqués, consulting">
+  <title>Services — ANGE ADJE</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+  <style>
+    /* ============================
+       RESET & ROOT (Harmonisé avec skills)
+       ============================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --yellow: #F7C948;
+      --yellow-dark: #e0aa00;
+      --yellow-glow: rgba(247,201,72,0.35);
+      --black: #0e0e0e;
+      --white: #FAFAF8;
+      --gray-light: #F2F0EB;
+      --gray-mid: #888;
+      --gray-dark: #444;
+      --transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+      --nav-h: 80px;
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 32px;
+      --shadow-soft: 0 8px 32px rgba(0,0,0,0.07);
+      --shadow-md: 0 16px 48px rgba(0,0,0,0.12);
+      --shadow-yellow: 0 16px 48px rgba(247,201,72,0.35);
+      --success: #00C851;
+      --warning: #ffbb33;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+      cursor: none;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a, button, .service-card, .process-step, .testimonial-card, .filter-btn { cursor: none; }
+
+    /* ============================
+       CUSTOM CURSOR (identique skills)
+       ============================ */
+    .cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--yellow);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: width 0.2s, height 0.2s;
+    }
+    .cursor-ring {
+      width: 38px; height: 38px;
+      border: 1.5px solid rgba(14,14,14,0.3);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: width 0.35s, height 0.35s, border-color 0.3s;
+    }
+    body.cursor-hover .cursor-dot { width: 16px; height: 16px; background: var(--black); }
+    body.cursor-hover .cursor-ring { width: 56px; height: 56px; border-color: var(--yellow); }
+
+    /* ============================
+       SCROLL PROGRESS
+       ============================ */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0;
+      height: 3px; background: var(--yellow);
+      z-index: 9999; width: 0%;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 8px var(--yellow-glow);
+    }
+
+    /* ============================
+       NAVIGATION (identique skills)
+       ============================ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 52px;
+      background: rgba(250,250,248,0.88);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      animation: navIn 0.8s 0.2s cubic-bezier(0.23,1,0.32,1) both;
+    }
+    @keyframes navIn { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.07); background: rgba(250,250,248,0.97); }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--black);
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px;
+    }
+    .nav-logo img { height: 44px; width: auto; }
+
+    .nav-links { display: flex; gap: 8px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--gray-dark);
+      font-size: 13.5px; font-weight: 500;
+      padding: 7px 14px; border-radius: 100px;
+      transition: var(--transition);
+    }
+    .nav-links a:hover { color: var(--black); background: var(--gray-light); }
+    .nav-links a.active { font-weight: 700; background: var(--yellow); color: var(--black); }
+
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .nav-socials { display: flex; gap: 4px; }
+    .nav-socials a {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gray-dark); font-size: 16px;
+      transition: var(--transition); text-decoration: none;
+    }
+    .nav-socials a:hover { background: var(--yellow); color: var(--black); }
+
+    .btn-nav-cta {
+      background: var(--black); color: var(--white);
+      padding: 10px 22px; border-radius: 100px;
+      font-size: 13px; font-weight: 600;
+      text-decoration: none; transition: var(--transition);
+      border: 2px solid var(--black);
+    }
+    .btn-nav-cta:hover {
+      background: var(--yellow); color: var(--black);
+      border-color: var(--yellow);
+      transform: translateY(-2px); box-shadow: var(--shadow-yellow);
+    }
+
+    /* Burger */
+    .burger {
+      display: none; flex-direction: column; gap: 5px;
+      padding: 8px; cursor: pointer; z-index: 600;
+      background: none; border: none;
+    }
+    .burger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--black); border-radius: 2px; transition: var(--transition);
+    }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      position: fixed; top: 0; right: -100%;
+      width: min(85vw, 380px); height: 100vh;
+      background: var(--white); z-index: 550;
+      padding: 100px 36px 40px;
+      transition: right 0.45s cubic-bezier(0.23,1,0.32,1);
+      box-shadow: -20px 0 60px rgba(0,0,0,0.15);
+      overflow-y: auto; display: flex; flex-direction: column;
+    }
+    .mobile-nav.open { right: 0; }
+    .mobile-nav ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .mobile-nav a {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: var(--black);
+      font-size: 17px; font-weight: 500;
+      padding: 14px 16px; border-radius: var(--radius-sm); transition: var(--transition);
+    }
+    .mobile-nav a:hover, .mobile-nav a.active { background: var(--yellow); font-weight: 700; }
+    .mobile-nav-socials {
+      display: flex; gap: 16px; margin-top: auto; padding-top: 40px;
+    }
+    .mobile-nav-socials a {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1.5px solid rgba(0,0,0,0.12);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--black); font-size: 18px; text-decoration: none; transition: var(--transition);
+    }
+    .mobile-nav-socials a:hover { background: var(--yellow); border-color: var(--yellow); }
+
+    .nav-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 540; opacity: 0; visibility: hidden;
+      transition: all 0.35s; backdrop-filter: blur(4px);
+    }
+    .nav-overlay.open { opacity: 1; visibility: visible; }
+
+    /* ============================
+       PAGE HERO (identique skills)
+       ============================ */
+    .page-hero {
+      min-height: 55vh;
+      padding: calc(var(--nav-h) + 60px) 52px 56px;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: var(--black);
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 80% 50%, rgba(247,201,72,0.18) 0%, transparent 70%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    }
+    .hero-ghost {
+      position: absolute; right: -20px; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(120px, 18vw, 240px); font-weight: 800;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.04);
+      letter-spacing: -8px; line-height: 1;
+      z-index: 1; pointer-events: none; user-select: none;
+      white-space: nowrap;
+    }
+    .page-hero-content { position: relative; z-index: 2; }
+    .page-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid rgba(247,201,72,0.3);
+      color: var(--yellow);
+      padding: 7px 16px; border-radius: 100px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 24px;
+      background: rgba(247,201,72,0.07);
+    }
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(52px, 9vw, 110px);
+      font-weight: 800; line-height: 0.92;
+      letter-spacing: -4px; color: var(--white);
+      margin-bottom: 24px;
+    }
+    .page-title em {
+      font-style: normal;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--yellow);
+    }
+    .page-desc {
+      font-size: 16px; color: rgba(255,255,255,0.5);
+      max-width: 520px; line-height: 1.7; font-weight: 300;
+    }
+    .stat-strip {
+      display: flex; gap: 0;
+      margin-top: 48px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 32px;
+    }
+    .stat-item {
+      padding: 0 40px 0 0;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      margin-right: 40px;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 40px; font-weight: 800; line-height: 1;
+      color: var(--white);
+    }
+    .stat-num span { color: var(--yellow); }
+    .stat-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 4px; font-weight: 400; }
+
+    /* ============================
+       FILTER TABS (identique skills)
+       ============================ */
+    .filter-bar {
+      padding: 36px 52px 0;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      position: sticky; top: var(--nav-h); z-index: 100;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding-bottom: 20px;
+    }
+    .filter-btn {
+      padding: 9px 20px; border-radius: 100px;
+      border: 1.5px solid rgba(0,0,0,0.12);
+      background: transparent; color: var(--gray-dark);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 500;
+      transition: var(--transition);
+      display: flex; align-items: center; gap: 7px;
+    }
+    .filter-btn:hover { border-color: var(--black); color: var(--black); }
+    .filter-btn.active {
+      background: var(--black); color: var(--white);
+      border-color: var(--black);
+    }
+    .filter-btn .count {
+      background: rgba(255,255,255,0.15);
+      padding: 1px 8px; border-radius: 100px;
+      font-size: 11px; font-weight: 700;
+    }
+    .filter-btn:not(.active) .count {
+      background: rgba(0,0,0,0.07); color: var(--gray-mid);
+    }
+
+    /* ============================
+       SERVICES GRID (amélioré)
+       ============================ */
+    .services-body {
+      padding: 56px 52px 80px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 32px;
+    }
+    .service-card {
+      background: var(--gray-light);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 0;
+      background: var(--yellow);
+      transition: height 0.4s cubic-bezier(0.23,1,0.32,1);
+    }
+    .service-card:hover::before {
+      height: 100%;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-yellow);
+      border-color: var(--yellow);
+      background: var(--white);
+    }
+    .service-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--white);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      transition: var(--transition);
+      box-shadow: var(--shadow-soft);
+    }
+    .service-card:hover .service-icon {
+      background: var(--yellow);
+      transform: scale(1.05) rotate(5deg);
+    }
+    .service-icon i {
+      font-size: 32px;
+      color: var(--black);
+    }
+    .service-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .service-desc {
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+    .service-features {
+      list-style: none;
+      margin-bottom: 28px;
+      flex: 1;
+    }
+    .service-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: var(--gray-dark);
+    }
+    .service-features li i {
+      color: var(--yellow);
+      font-size: 12px;
+      width: 18px;
+    }
+    .service-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--black);
+    }
+    .service-price small {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--gray-mid);
+    }
+    .btn-service {
+      background: transparent;
+      border: 2px solid var(--black);
+      padding: 12px 24px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 13px;
+      text-decoration: none;
+      color: var(--black);
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: fit-content;
+    }
+    .btn-service:hover {
+      background: var(--black);
+      color: var(--white);
+      transform: translateY(-2px);
+      border-color: var(--yellow);
+      box-shadow: var(--shadow-yellow);
+    }
+    .popular-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--yellow);
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ============================
+       PROCESS SECTION
+       ============================ */
+    .process-section {
+      padding: 80px 52px;
+      background: var(--gray-light);
+      position: relative;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 48px;
+      text-align: center;
+    }
+    .section-title span { color: var(--yellow); }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+    }
+    .process-step {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 32px 24px;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+    }
+    .process-step:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-yellow);
+    }
+    .step-number {
+      width: 50px;
+      height: 50px;
+      background: var(--yellow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+    }
+    .step-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .step-desc {
+      font-size: 13px;
+      color: var(--gray-mid);
+      line-height: 1.6;
+    }
+
+    /* ============================
+       TESTIMONIALS SECTION
+       ============================ */
+    .testimonials-section {
+      padding: 80px 52px;
+      background: var(--white);
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    .testimonial-card {
+      background: var(--gray-light);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      transition: var(--transition);
+    }
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-yellow);
+    }
+    .testimonial-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #555;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      background: var(--yellow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      font-family: 'Syne', sans-serif;
+    }
+    .author-info h4 {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .author-info p {
+      font-size: 11px;
+      color: var(--gray-mid);
+    }
+
+    /* ============================
+       MARQUEE (identique skills)
+       ============================ */
+    .marquee-wrap { overflow: hidden; margin-top: 40px; }
+    .marquee-row {
+      display: flex; overflow: hidden;
+      padding: 14px 0;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      background: var(--black);
+    }
+    .marquee-track {
+      display: flex; flex-shrink: 0; align-items: center;
+      animation: marqueeScroll 24s linear infinite;
+    }
+    @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+    .m-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 32px; white-space: nowrap;
+      font-family: 'Syne', sans-serif;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .m-item .star { color: var(--yellow); }
+
+    /* ============================
+       BACK TO TOP
+       ============================ */
+    .back-top {
+      position: fixed; right: 28px; bottom: 28px;
+      width: 46px; height: 46px;
+      background: var(--black); color: var(--white);
+      border-radius: 50%; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 18px; text-decoration: none;
+      box-shadow: var(--shadow-md);
+      opacity: 0; visibility: hidden;
+      transform: translateY(12px);
+      transition: var(--transition);
+      z-index: 200;
+      border: 2px solid transparent;
+    }
+    .back-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    .back-top:hover { background: var(--yellow); color: var(--black); border-color: var(--yellow-dark); }
+
+    /* ============================
+       REVEAL ANIMATION
+       ============================ */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.23,1,0.32,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ============================
+       TOAST NOTIFICATION
+       ============================ */
+    .toast-notification {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--black);
+      color: white;
+      padding: 14px 24px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: var(--shadow-md);
+      z-index: 1000;
+      transform: translateX(400px);
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+      border-left: 4px solid var(--yellow);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(10px);
+      background: rgba(14,14,14,0.95);
+      pointer-events: none;
+    }
+    .toast-notification.show {
+      transform: translateX(0);
+    }
+    .toast-notification i {
+      font-size: 18px;
+      color: var(--yellow);
+    }
+
+    /* ============================
+       RESPONSIVE
+       ============================ */
+    @media (max-width: 860px) {
+      nav { padding: 0 20px; }
+      .nav-links, .nav-actions { display: none; }
+      .burger { display: flex; }
+      .page-hero { padding: calc(var(--nav-h) + 40px) 24px 48px; min-height: 50vh; }
+      .page-title { font-size: clamp(44px, 12vw, 80px); letter-spacing: -2.5px; }
+      .stat-strip { flex-wrap: wrap; gap: 24px; }
+      .stat-item { border-right: none; margin-right: 0; padding-right: 0; }
+      .filter-bar { padding: 20px 24px 16px; overflow-x: auto; flex-wrap: nowrap; justify-content: flex-start; }
+      .filter-btn { flex-shrink: 0; }
+      .services-body { padding: 40px 24px 60px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .process-section { padding: 60px 24px; }
+      .testimonials-section { padding: 60px 24px; }
+      .section-title { font-size: 32px; }
+    }
+    @media (max-width: 480px) {
+      .service-title { font-size: 20px; }
+      .service-icon { width: 56px; height: 56px; }
+      .service-icon i { font-size: 26px; }
+      .process-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<a href="#" class="back-top" id="backTop"><i class="fa-solid fa-arrow-up"></i></a>
+
+<!-- Navigation (identique skills) -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo (2).png" alt="Logo" onerror="this.style.display='none'">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="about.html">À propos</a></li>
+    <li><a href="projects.html">Projets</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="experience.html">Expériences</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="nav-socials">
+      <a href="https://www.linkedin.com/in/ange-emmanuel-stephane-adj%C3%A9-0015472b9" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://github.com/Ange496" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://tiktok.com/@nerix54" target="_blank"><i class="fab fa-tiktok"></i></a>
+    </div>
+    <a href="contact.html" class="btn-nav-cta">Me contacter</a>
+  </div>
+  <button class="burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="about.html">À propos</a></li>
+    <li><a href="projects.html">Projets</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="experience.html">Expériences</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="mobile-nav-socials">
+    <a href="https://www.linkedin.com/in/ange-emmanuel-stephane-adj%C3%A9-0015472b9" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://github.com/Ange496" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="https://tiktok.com/@nerix54" target="_blank"><i class="fab fa-tiktok"></i></a>
+  </div>
+</div>
+
+<!-- Hero Section (identique skills) -->
+<section class="page-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-ghost" aria-hidden="true">SERVICES</div>
+  <div class="page-hero-content">
+    <div class="page-tag">
+      <i class="fa-solid fa-crown" style="font-size:10px"></i>
+      Ce que je propose
+    </div>
+    <h1 class="page-title">Mes <em>services</em></h1>
+    <p class="page-desc">
+      Des solutions sur mesure en développement mobile, systèmes embarqués et IoT.
+      De l'idée à la réalisation, je vous accompagne à chaque étape.
+    </p>
+    <div class="stat-strip">
+      <div class="stat-item"><div class="stat-num">6<span>+</span></div><div class="stat-label">Services proposés</div></div>
+      <div class="stat-item"><div class="stat-num">100<span>%</span></div><div class="stat-label">Satisfaction client</div></div>
+      <div class="stat-item"><div class="stat-num">24/7<span></span></div><div class="stat-label">Support inclus</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Filter Bar -->
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">Tous <span class="count">6</span></button>
+  <button class="filter-btn" data-filter="mobile">Mobile <span class="count">1</span></button>
+  <button class="filter-btn" data-filter="embedded">Embarqué & IoT <span class="count">3</span></button>
+  <button class="filter-btn" data-filter="backend">Backend & API <span class="count">1</span></button>
+  <button class="filter-btn" data-filter="consulting">Consulting <span class="count">1</span></button>
+</div>
+
+<!-- Services Grid -->
+<main class="services-body">
+  <div class="services-grid" id="servicesGrid">
+    <!-- Les services sont générés dynamiquement via JavaScript -->
+  </div>
+</main>
+
+<!-- Process Section -->
+<section class="process-section">
+  <h2 class="section-title">Comment je <span>travaille</span></h2>
+  <div class="process-grid">
+    <div class="process-step reveal">
+      <div class="step-number">1</div>
+      <h4 class="step-title">Analyse & Brief</h4>
+      <p class="step-desc">Compréhension de vos besoins, définition des objectifs et des contraintes techniques.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-number">2</div>
+      <h4 class="step-title">Conception</h4>
+      <p class="step-desc">Maquettes, architecture technique et choix des technologies adaptées.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-number">3</div>
+      <h4 class="step-title">Développement</h4>
+      <p class="step-desc">Réalisation itérative avec livraisons régulières et tests continus.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-number">4</div>
+      <h4 class="step-title">Livraison & Support</h4>
+      <p class="step-desc">Déploiement, documentation et accompagnement post-livraison.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+  <h2 class="section-title">Ce qu'ils <span>disent</span></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <p class="testimonial-text">"Ange a développé notre application mobile avec un grand professionnalisme. Le résultat dépasse nos attentes !"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">YE</div>
+        <div class="author-info">
+          <h4>YAO EMMANUEL</h4>
+          <p>CEO, DjoumAf</p>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <p class="testimonial-text">"Excellent travail sur notre système IoT. Ange a su comprendre nos besoins et proposer des solutions innovantes."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">AA</div>
+        <div class="author-info">
+          <h4>ADJE ANGE</h4>
+          <p>CTO, NERIX</p>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <p class="testimonial-text">"Je recommande vivement Ange pour son professionnalisme et sa réactivité. Un vrai plaisir de collaborer."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">NG</div>
+        <div class="author-info">
+          <h4>N'GUESSAN</h4>
+          <p>Directeur, JustVyou</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-row">
+    <div class="marquee-track">
+      <div class="m-item"><span class="star">✦</span> Applications Mobiles</div>
+      <div class="m-item"><span class="star">✦</span> Systèmes Embarqués</div>
+      <div class="m-item"><span class="star">✦</span> IoT & Objets Connectés</div>
+      <div class="m-item"><span class="star">✦</span> API & Backend</div>
+      <div class="m-item"><span class="star">✦</span> Consulting Technique</div>
+      <div class="m-item"><span class="star">✦</span> Prototypage Rapide</div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast-notification" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMessage"></span>
+</div>
+
+<script>
+// ==================== DONNÉES DES SERVICES ====================
+const servicesData = [
+  { title: "Applications Mobiles", category: "mobile", description: "Développement d'applications iOS et Android natives ou cross-platform (React Native). UX optimisée et performances.", features: ["UI/UX design adapté", "Intégration API REST", "Notifications push", "Publication sur stores"], price: "Sur mesure", popular: true, icon: "fa-mobile-screen-button" },
+  { title: "Systèmes Embarqués", category: "embedded", description: "Conception de cartes électroniques et programmation de microcontrôleurs (Arduino, ESP32, STM32).", features: ["Programmation C/C++", "Capteurs et actionneurs", "Communication sans fil", "Prototypage rapide"], price: "Sur mesure", popular: false, icon: "fa-microchip" },
+  { title: "IoT & Objets Connectés", category: "embedded", description: "Solutions IoT complètes : du capteur à l'application mobile, en passant par le cloud.", features: ["Connectivité WiFi/Bluetooth/LoRa", "Plateforme cloud (Firebase, AWS)", "Dashboard temps réel", "Alertes et notifications"], price: "Sur mesure", popular: true, icon: "fa-cloud" },
+  { title: "Backend & API", category: "backend", description: "Développement d'API robustes et sécurisées (Node.js, FastAPI) pour vos applications.", features: ["API REST / GraphQL", "Base de données (MySQL, MongoDB)", "Authentification JWT/OAuth", "Documentation OpenAPI"], price: "Sur mesure", popular: false, icon: "fa-server" },
+  { title: "Prototypage & POC", category: "embedded", description: "Validez vos idées rapidement avec un prototype fonctionnel pour application ou objet connecté.", features: ["Maquettes interactives", "MVP fonctionnel", "Tests utilisateurs", "Itérations rapides"], price: "À partir de 100k FCFA", popular: false, icon: "fa-flask" },
+  { title: "Consulting & Formation", category: "consulting", description: "Conseil en architecture technique et formation aux technologies mobiles et embarquées.", features: ["Audit technique", "Choix technologiques", "Formation sur mesure", "Accompagnement projet"], price: "Sur mesure", popular: false, icon: "fa-chalkboard-user" }
+];
+
+// Rendu des services
+function renderServices(filter = "all") {
+  const grid = document.getElementById("servicesGrid");
+  if (!grid) return;
+  
+  let filtered = servicesData;
+  if (filter !== "all") filtered = servicesData.filter(s => s.category === filter);
+  
+  grid.innerHTML = filtered.map(service => `
+    <div class="service-card reveal" data-category="${service.category}">
+      ${service.popular ? '<div class="popular-badge">Populaire</div>' : ''}
+      <div class="service-icon"><i class="fas ${service.icon}"></i></div>
+      <h3 class="service-title">${service.title}</h3>
+      <p class="service-desc">${service.description}</p>
+      <ul class="service-features">
+        ${service.features.map(f => `<li><i class="fas fa-check"></i> ${f}</li>`).join('')}
+      </ul>
+      <div class="service-price">${service.price} <small>selon besoin</small></div>
+      <a href="#" class="btn-service service-btn" data-service="${service.title}">Demander un devis <i class="fas fa-arrow-right"></i></a>
+    </div>
+  `).join('');
+  
+  // Réactiver les événements sur les nouveaux boutons
+  document.querySelectorAll('.service-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const serviceName = btn.dataset.service;
+      showToast(`Demande de devis pour : ${serviceName} ✨`);
+      // Redirection vers la page de contact
+      setTimeout(() => {
+        window.location.href = `contact.html?service=${encodeURIComponent(serviceName)}`;
+      }, 1500);
+    });
+  });
+  
+  // Réactiver les animations reveal
+  document.querySelectorAll('.reveal').forEach(el => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  });
+}
+
+// Filtres
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderServices(btn.dataset.filter);
+    showToast(`Affichage des services : ${btn.textContent}`);
+  });
+});
+
+// Initialisation
+renderServices("all");
+
+// ==================== SCRIPTS COMMUNS (identique skills) ====================
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
+function animRing() { rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); }
+animRing();
+document.querySelectorAll('a, button, .service-card, .process-step, .testimonial-card, .filter-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+const progress = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => { const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100; progress.style.width = pct + '%'; });
+
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
+
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => backTop.classList.toggle('visible', window.scrollY > 400));
+backTop.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+const burger = document.getElementById('burger');
+const mobileNav = document.getElementById('mobileNav');
+const navOverlay = document.getElementById('navOverlay');
+function toggleNav(open) { burger.classList.toggle('open', open); mobileNav.classList.toggle('open', open); navOverlay.classList.toggle('open', open); document.body.style.overflow = open ? 'hidden' : ''; }
+burger.addEventListener('click', () => toggleNav(!burger.classList.contains('open')));
+navOverlay.addEventListener('click', () => toggleNav(false));
+document.querySelectorAll('.mobile-nav a').forEach(a => a.addEventListener('click', () => toggleNav(false)));
+
+// Reveal on scroll
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// Marquee pause on hover
+document.querySelectorAll('.marquee-track').forEach(t => {
+  t.addEventListener('mouseenter', () => t.style.animationPlayState = 'paused');
+  t.addEventListener('mouseleave', () => t.style.animationPlayState = 'running');
+});
+
+// Toast notification
+const toast = document.getElementById('toast');
+const toastMessage = document.getElementById('toastMessage');
+function showToast(message) {
+  toastMessage.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => { toast.classList.remove('show'); }, 3000);
+}
+
+// Effet de typing dans la description du header
+const headerDesc = document.querySelector('.page-desc');
+if (headerDesc) {
+  const originalText = headerDesc.textContent;
+  headerDesc.textContent = '';
+  let i = 0;
+  setTimeout(() => {
+    const interval = setInterval(() => {
+      if (i < originalText.length) {
+        headerDesc.textContent += originalText[i++];
+      } else {
+        clearInterval(interval);
+      }
+    }, 25);
+  }, 300);
+}
+</script>
+</body>
+</html>

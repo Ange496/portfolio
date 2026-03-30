@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="À propos de ANGE ADJE — Développeur Mobile & Systèmes Embarqués basé en Côte d'Ivoire.">
+<title>À propos — ANGE ADJE</title>
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --yellow: #F7C948;
+  --yellow-dark: #e0aa00;
+  --yellow-glow: rgba(247,201,72,0.35);
+  --black: #0e0e0e;
+  --white: #FAFAF8;
+  --gray-light: #F2F0EB;
+  --gray-mid: #888;
+  --gray-dark: #444;
+  --transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+  --nav-h: 80px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --shadow-soft: 0 8px 32px rgba(0,0,0,0.07);
+  --shadow-md: 0 16px 48px rgba(0,0,0,0.12);
+  --shadow-yellow: 0 16px 48px rgba(247,201,72,0.35);
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--black); overflow-x: hidden; cursor: none; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { cursor: none; }
+
+/* SCROLL PROGRESS */
+.scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--yellow); z-index: 9999; width: 0%; transition: width 0.1s linear; box-shadow: 0 0 8px var(--yellow-glow); }
+
+/* CURSOR */
+.cursor-dot { width: 8px; height: 8px; background: var(--yellow); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); will-change: transform; transition: width 0.2s, height 0.2s, background 0.2s; }
+.cursor-ring { width: 38px; height: 38px; border: 1.5px solid rgba(14,14,14,0.3); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); will-change: transform; transition: width 0.35s, height 0.35s, border-color 0.3s; }
+body.cursor-hover .cursor-dot { width: 16px; height: 16px; background: var(--black); }
+body.cursor-hover .cursor-ring { width: 56px; height: 56px; border-color: var(--yellow); }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 500; display: flex; align-items: center; justify-content: space-between; padding: 0 52px; background: rgba(250,250,248,0.88); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid rgba(0,0,0,0.06); animation: navIn 0.8s 0.2s cubic-bezier(0.23,1,0.32,1) both; }
+@keyframes navIn { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.07); background: rgba(250,250,248,0.97); }
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--black); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; }
+.nav-logo img { height: 44px; width: auto; }
+.nav-links { display: flex; gap: 8px; list-style: none; }
+.nav-links a { text-decoration: none; color: var(--gray-dark); font-size: 13.5px; font-weight: 500; padding: 7px 14px; border-radius: 100px; transition: var(--transition); }
+.nav-links a:hover { color: var(--black); background: var(--gray-light); }
+.nav-links a.active { font-weight: 700; background: var(--yellow); color: var(--black); }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+.nav-socials { display: flex; gap: 4px; }
+.nav-socials a { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gray-dark); font-size: 16px; transition: var(--transition); text-decoration: none; }
+.nav-socials a:hover { background: var(--yellow); color: var(--black); }
+.btn-nav-cta { background: var(--black); color: var(--white); padding: 10px 22px; border-radius: 100px; font-size: 13px; font-weight: 600; text-decoration: none; transition: var(--transition); border: 2px solid var(--black); }
+.btn-nav-cta:hover { background: var(--yellow); color: var(--black); border-color: var(--yellow); transform: translateY(-2px); box-shadow: var(--shadow-yellow); }
+
+.burger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; z-index: 600; background: none; border: none; }
+.burger span { display: block; width: 24px; height: 2px; background: var(--black); border-radius: 2px; transition: var(--transition); }
+.burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-nav { position: fixed; top: 0; right: -100%; width: min(85vw, 380px); height: 100vh; background: var(--white); z-index: 550; padding: 100px 36px 40px; transition: right 0.45s cubic-bezier(0.23,1,0.32,1); box-shadow: -20px 0 60px rgba(0,0,0,0.15); overflow-y: auto; display: flex; flex-direction: column; }
+.mobile-nav.open { right: 0; }
+.mobile-nav ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.mobile-nav a { display: block; text-decoration: none; color: var(--black); font-size: 17px; font-weight: 500; padding: 14px 16px; border-radius: var(--radius-sm); transition: var(--transition); }
+.mobile-nav a:hover, .mobile-nav a.active { background: var(--yellow); font-weight: 700; }
+.mobile-nav-socials { display: flex; gap: 16px; margin-top: auto; padding-top: 40px; }
+.mobile-nav-socials a { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; color: var(--black); font-size: 18px; text-decoration: none; transition: var(--transition); }
+.mobile-nav-socials a:hover { background: var(--yellow); border-color: var(--yellow); }
+.nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 540; opacity: 0; visibility: hidden; transition: all 0.35s; backdrop-filter: blur(4px); }
+.nav-overlay.open { opacity: 1; visibility: visible; }
+
+/* HERO — FULLSCREEN */
+.about-hero { position: relative; min-height: 100vh; display: flex; align-items: flex-end; overflow: hidden; }
+.hero-photo { position: absolute; inset: 0; z-index: 0; }
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: brightness(0.5) saturate(1.1); transform: scale(1.04); transition: transform 12s ease, filter 0.5s; }
+.about-hero:hover .hero-photo img { transform: scale(1); }
+.hero-grad-bottom { position: absolute; bottom: 0; left: 0; right: 0; height: 72%; background: linear-gradient(to top, rgba(14,14,14,0.98) 0%, rgba(14,14,14,0.4) 60%, transparent 100%); z-index: 1; }
+.hero-grad-left { position: absolute; top: 0; left: 0; bottom: 0; width: 50%; background: linear-gradient(to right, rgba(14,14,14,0.5), transparent); z-index: 1; }
+.hero-grid { position: absolute; inset: 0; z-index: 2; pointer-events: none; background-image: linear-gradient(rgba(247,201,72,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(247,201,72,0.03) 1px, transparent 1px); background-size: 60px 60px; }
+.hero-ghost { position: absolute; right: -10px; top: 50%; transform: translateY(-50%); font-family: 'Syne', sans-serif; font-size: clamp(130px, 20vw, 260px); font-weight: 800; color: transparent; -webkit-text-stroke: 1px rgba(247,201,72,0.07); letter-spacing: -8px; line-height: 1; z-index: 2; pointer-events: none; user-select: none; transition: -webkit-text-stroke-color 0.5s; }
+.about-hero:hover .hero-ghost { -webkit-text-stroke-color: rgba(247,201,72,0.13); }
+
+/* Float badges */
+.float-badge { position: absolute; z-index: 10; display: flex; align-items: center; gap: 9px; background: rgba(255,255,255,0.1); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.18); padding: 10px 20px; border-radius: 100px; color: var(--white); font-size: 13px; font-weight: 600; box-shadow: 0 12px 32px rgba(0,0,0,0.3); transition: var(--transition); cursor: none; }
+.float-badge i { color: var(--yellow); font-size: 14px; transition: color 0.3s; }
+.float-badge:hover { background: var(--yellow); color: var(--black); transform: translateY(-8px) scale(1.04); box-shadow: var(--shadow-yellow); }
+.float-badge:hover i { color: var(--black); }
+.float-badge.b1 { top: 22%; left: 8%; animation: flt1 5s ease-in-out infinite; }
+.float-badge.b2 { top: 38%; right: 12%; animation: flt2 6s ease-in-out 1s infinite; }
+.float-badge.b3 { bottom: 28%; left: 12%; animation: flt1 4.5s ease-in-out 0.5s infinite; }
+@keyframes flt1 { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-14px); } }
+@keyframes flt2 { 0%,100%{ transform: translateY(0) rotate(-1deg); } 50%{ transform: translateY(-10px) rotate(1deg); } }
+
+/* Hero content */
+.hero-content { position: relative; z-index: 5; width: 100%; padding: 0 52px 64px; }
+.availability { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(247,201,72,0.3); color: var(--yellow); padding: 7px 16px; border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; background: rgba(247,201,72,0.07); }
+.avail-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); animation: apulse 1.4s ease infinite; }
+@keyframes apulse { 0% { box-shadow: 0 0 0 0 rgba(247,201,72,0.5); } 70% { box-shadow: 0 0 0 8px rgba(247,201,72,0); } 100% { box-shadow: 0 0 0 0 rgba(247,201,72,0); } }
+.hero-name { font-family: 'Syne', sans-serif; font-size: clamp(52px, 9vw, 120px); font-weight: 800; line-height: 0.9; letter-spacing: -4px; color: var(--white); margin-bottom: 20px; }
+.hero-name em { font-style: normal; color: transparent; -webkit-text-stroke: 2px var(--yellow); }
+.hero-role-line { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+.hero-role-line::before { content: ''; display: block; width: 40px; height: 2px; background: var(--yellow); flex-shrink: 0; }
+.hero-role { font-family: 'Syne', sans-serif; font-size: clamp(12px, 1.5vw, 16px); font-weight: 700; color: rgba(255,255,255,0.7); letter-spacing: 3px; text-transform: uppercase; }
+.hero-bottom { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; }
+.hero-desc { font-size: 15.5px; line-height: 1.75; color: rgba(255,255,255,0.65); max-width: 500px; font-weight: 300; }
+.hero-actions { display: flex; gap: 12px; flex-shrink: 0; }
+
+.btn { display: inline-flex; align-items: center; gap: 9px; padding: 14px 28px; border-radius: 100px; font-size: 14px; font-weight: 600; text-decoration: none; cursor: none; transition: var(--transition); border: 2px solid transparent; white-space: nowrap; font-family: 'DM Sans', sans-serif; }
+.btn-yellow { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+.btn-yellow:hover { background: var(--yellow-dark); border-color: var(--yellow-dark); transform: translateY(-3px); box-shadow: var(--shadow-yellow); }
+.btn-yellow .btn-icon { width: 22px; height: 22px; border-radius: 50%; background: var(--black); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--yellow); transition: transform 0.3s; }
+.btn-yellow:hover .btn-icon { transform: rotate(45deg); }
+.btn-glass { background: rgba(255,255,255,0.1); color: var(--white); border-color: rgba(255,255,255,0.2); backdrop-filter: blur(10px); }
+.btn-glass:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.35); transform: translateY(-3px); }
+
+.hero-stats { display: flex; gap: 0; margin-top: 36px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; flex-wrap: wrap; }
+.hstat { padding: 0 36px 0 0; margin-right: 36px; border-right: 1px solid rgba(255,255,255,0.08); }
+.hstat:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+.hstat-num { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: var(--white); line-height: 1; }
+.hstat-num span { color: var(--yellow); }
+.hstat-label { font-size: 11.5px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+
+/* ABOUT DETAIL */
+.about-detail { padding: 100px 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.detail-left { position: sticky; top: calc(var(--nav-h) + 30px); }
+
+.section-label { font-family: 'Syne', sans-serif; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 4px; color: #bbb; display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.section-label::before { content: ''; display: block; width: 24px; height: 2px; background: var(--yellow); }
+.section-title { font-family: 'Syne', sans-serif; font-size: clamp(32px, 4vw, 52px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 24px; }
+.section-title span { color: var(--yellow); }
+
+.detail-photo { width: 100%; aspect-ratio: 4/5; border-radius: var(--radius-lg); overflow: hidden; position: relative; box-shadow: var(--shadow-md); margin-top: 36px; }
+.detail-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 0.6s ease; }
+.detail-photo:hover img { transform: scale(1.04); }
+.photo-caption { position: absolute; bottom: 20px; left: 20px; right: 20px; background: rgba(14,14,14,0.85); backdrop-filter: blur(10px); border-radius: var(--radius-sm); padding: 14px 18px; color: var(--white); font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+.photo-caption i { color: var(--yellow); }
+
+.detail-right { display: flex; flex-direction: column; gap: 40px; }
+.about-intro { font-size: 16.5px; line-height: 1.82; color: #555; font-weight: 300; }
+.about-intro strong { color: var(--black); font-weight: 600; }
+
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.info-card { background: var(--gray-light); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 6px; transition: var(--transition); cursor: none; border: 1px solid transparent; }
+.info-card:hover { border-color: var(--yellow); background: var(--white); transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+.info-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--yellow); display: flex; align-items: center; justify-content: center; font-size: 16px; margin-bottom: 4px; }
+.info-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #aaa; }
+.info-value { font-size: 13.5px; font-weight: 600; color: var(--black); line-height: 1.35; }
+
+.values-list { display: flex; flex-direction: column; gap: 14px; }
+.value-item { display: flex; gap: 16px; align-items: flex-start; padding: 20px; border-radius: var(--radius-md); background: var(--gray-light); transition: var(--transition); border: 1px solid transparent; cursor: none; }
+.value-item:hover { background: var(--white); border-color: rgba(247,201,72,0.3); transform: translateX(6px); box-shadow: var(--shadow-soft); }
+.value-num { width: 36px; height: 36px; border-radius: 10px; background: var(--black); color: var(--yellow); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; flex-shrink: 0; }
+.value-text h4 { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.value-text p { font-size: 13px; color: var(--gray-mid); line-height: 1.55; font-weight: 300; }
+
+.cta-strip { background: var(--black); border-radius: var(--radius-lg); padding: 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.cta-strip-text h3 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--white); margin-bottom: 6px; }
+.cta-strip-text p { font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 300; }
+.btn-cta { display: inline-flex; align-items: center; gap: 9px; padding: 13px 26px; border-radius: 100px; background: var(--yellow); color: var(--black); font-size: 14px; font-weight: 700; text-decoration: none; transition: var(--transition); cursor: none; flex-shrink: 0; }
+.btn-cta:hover { background: var(--yellow-dark); transform: translateY(-3px); box-shadow: var(--shadow-yellow); }
+
+/* MARQUEE */
+.marquee-wrap { overflow: hidden; }
+.marquee-row { display: flex; overflow: hidden; padding: 16px 0; border-top: 1px solid rgba(0,0,0,0.05); }
+.marquee-row.dark { background: var(--black); border-color: rgba(255,255,255,0.04); }
+.marquee-row.gold { background: var(--yellow); }
+.marquee-track { display: flex; flex-shrink: 0; align-items: center; animation: mScroll 24s linear infinite; will-change: transform; }
+.marquee-track.rev { animation-direction: reverse; animation-duration: 28s; }
+@keyframes mScroll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+.m-item { display: flex; align-items: center; gap: 12px; padding: 0 32px; white-space: nowrap; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; }
+.marquee-row.dark .m-item { color: rgba(255,255,255,0.55); }
+.marquee-row.dark .m-item .star { color: var(--yellow); }
+.marquee-row.gold .m-item { color: rgba(0,0,0,0.65); }
+.marquee-row.gold .m-item .star { color: rgba(0,0,0,0.3); }
+
+/* TOAST */
+.toast { position: fixed; bottom: 28px; right: 28px; background: rgba(14,14,14,0.95); backdrop-filter: blur(12px); color: var(--white); padding: 14px 22px; border-radius: 100px; font-size: 13.5px; font-weight: 500; box-shadow: 0 16px 40px rgba(0,0,0,0.25); z-index: 2000; transform: translateY(80px); opacity: 0; transition: all 0.4s cubic-bezier(0.23,1,0.32,1); display: flex; align-items: center; gap: 10px; border-left: 3px solid var(--yellow); pointer-events: none; }
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.success { border-left-color: #00C851; }
+.toast i { font-size: 17px; }
+.toast.success i { color: #00C851; }
+
+/* BACK TO TOP */
+.back-top { position: fixed; right: 28px; bottom: 28px; width: 46px; height: 46px; background: var(--black); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; text-decoration: none; box-shadow: var(--shadow-md); opacity: 0; visibility: hidden; transform: translateY(12px); transition: var(--transition); z-index: 200; cursor: none; border: 2px solid transparent; }
+.back-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.back-top:hover { background: var(--yellow); color: var(--black); border-color: var(--yellow-dark); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.23,1,0.32,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .about-detail { grid-template-columns: 1fr; gap: 48px; }
+  .detail-left { position: static; }
+}
+@media (max-width: 860px) {
+  nav { padding: 0 20px; }
+  .nav-links, .nav-actions { display: none; }
+  .burger { display: flex; }
+  .hero-content { padding: 0 24px 48px; }
+  .hero-name { font-size: clamp(44px, 12vw, 72px); letter-spacing: -2.5px; }
+  .hero-bottom { grid-template-columns: 1fr; gap: 24px; }
+  .hero-actions { flex-wrap: wrap; }
+  .btn { width: 100%; justify-content: center; }
+  .hero-stats { gap: 20px; }
+  .hstat { border-right: none; padding-right: 0; margin-right: 0; }
+  .float-badge { display: none; }
+  .about-detail { padding: 60px 24px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .cta-strip { flex-direction: column; text-align: center; }
+  .toast { left: 20px; right: 20px; border-radius: 16px; }
+  .back-top { right: 20px; bottom: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="toast" id="toast"><i id="toastIcon"></i><span id="toastText"></span></div>
+<a href="#" class="back-top" id="backTop" aria-label="Retour en haut"><i class="fa-solid fa-arrow-up"></i></a>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo (2).png" alt="Logo" onerror="this.style.display='none'">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="about.html" class="active">À propos</a></li>
+    <li><a href="projects.html">Projets</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="experience.html">Expériences</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="nav-socials">
+      <a href="https://www.linkedin.com/in/ange-emmanuel-stephane-adj%C3%A9-0015472b9" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://github.com/Ange496" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+      <a href="https://www.tiktok.com/@angedev8" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>
+    </div>
+    <a href="contact.html" class="btn-nav-cta">Me contacter</a>
+  </div>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="about.html" class="active">À propos</a></li>
+    <li><a href="projects.html">Projets</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="experience.html">Expériences</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="mobile-nav-socials">
+    <a href="https://www.linkedin.com/in/ange-emmanuel-stephane-adj%C3%A9-0015472b9" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://github.com/Ange496" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+ <a href="https://www.tiktok.com/@angedev8" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="hero-photo"><img src="images/photo.jpeg" alt="ANGE ADJE" loading="eager"></div>
+  <div class="hero-grad-bottom"></div>
+  <div class="hero-grad-left"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-ghost" aria-hidden="true">ANGE</div>
+
+  <div class="float-badge b1"><i class="fa-solid fa-mobile-screen"></i> React Native</div>
+  <div class="float-badge b2"><i class="fa-solid fa-microchip"></i> ESP32 / IoT</div>
+  <div class="float-badge b3"><i class="fa-solid fa-code"></i> Full-Stack Mobile</div>
+
+  <div class="hero-content">
+    <div class="availability"><span class="avail-dot"></span> Disponible pour de nouveaux projets</div>
+    <h1 class="hero-name">ADJE<br><em>ANGE</em></h1>
+    <div class="hero-role-line">
+      <span class="hero-role" id="typedRole">Développeur Mobile &amp; Systèmes Embarqués</span>
+    </div>
+    <div class="hero-bottom">
+      <p class="hero-desc">
+        Je transforme des idées en produits connectés : applications mobiles intuitives,
+        objets intelligents et interfaces homme-machine. Basé en Côte d'Ivoire, disponible à l'international.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-yellow" id="downloadCvBtn">
+          Télécharger CV
+          <span class="btn-icon"><i class="fa-solid fa-arrow-down" style="font-size:10px"></i></span>
+        </a>
+        <a href="contact.html" class="btn btn-glass"><i class="fa-regular fa-envelope"></i> Me contacter</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num" data-target="2">0<span>+</span></div><div class="hstat-label">An d'expérience</div></div>
+      <div class="hstat"><div class="hstat-num" data-target="20">0<span>+</span></div><div class="hstat-label">Projets livrés</div></div>
+      <div class="hstat"><div class="hstat-num" data-target="8">0</div><div class="hstat-label">Clients satisfaits</div></div>
+      <div class="hstat"><div class="hstat-num" data-target="30">0<span>+</span></div><div class="hstat-label">Technologies</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE 1 -->
+<div class="marquee-wrap">
+  <div class="marquee-row dark">
+    <div class="marquee-track">
+      <div class="m-item"><span class="star">✦</span> React Native</div>
+      <div class="m-item"><span class="star">✦</span> Systèmes Embarqués</div>
+      <div class="m-item"><span class="star">✦</span> IoT</div>
+      <div class="m-item"><span class="star">✦</span> Arduino</div>
+      <div class="m-item"><span class="star">✦</span> ESP32</div>
+      <div class="m-item"><span class="star">✦</span> UI / UX</div>
+      <div class="m-item"><span class="star">✦</span> Firebase</div>
+      <div class="m-item"><span class="star">✦</span> API REST</div>
+    </div>
+    <div class="marquee-track" aria-hidden="true">
+      <div class="m-item"><span class="star">✦</span> React Native</div>
+      <div class="m-item"><span class="star">✦</span> Systèmes Embarqués</div>
+      <div class="m-item"><span class="star">✦</span> IoT</div>
+      <div class="m-item"><span class="star">✦</span> Arduino</div>
+      <div class="m-item"><span class="star">✦</span> ESP32</div>
+      <div class="m-item"><span class="star">✦</span> UI / UX</div>
+      <div class="m-item"><span class="star">✦</span> Firebase</div>
+      <div class="m-item"><span class="star">✦</span> API REST</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT DETAIL -->
+<section class="about-detail">
+  <div class="detail-left reveal">
+    <div class="section-label">Mon histoire</div>
+    <div class="section-title">Qui suis-<span>je</span> ?</div>
+    <div class="detail-photo">
+      <img src="images/photo.jpeg" alt="ANGE ADJE" loading="lazy">
+      <div class="photo-caption"><i class="fa-solid fa-location-dot"></i> Abidjan, Côte d'Ivoire 🇨🇮</div>
+    </div>
+  </div>
+
+  <div class="detail-right">
+    <div class="reveal">
+      <p class="about-intro">
+        Je suis <strong>ADJE Ange Emmanuel Stéphane</strong>, développeur mobile et systèmes embarqués
+        passionné par l'intersection entre le monde physique et le numérique.
+        <br><br>
+        Depuis plus de<strong> deux ans</strong>, je conçois des applications mobiles cross-platform et des
+        solutions IoT qui résolvent des problèmes concrets. Mon approche combine
+        rigueur technique et sens du design pour livrer des produits que les utilisateurs adorent.
+        <br><br>
+        Je crois que la technologie doit être <strong>accessible, belle et utile</strong> — et c'est
+        cette philosophie qui guide chacun de mes projets.
+      </p>
+    </div>
+
+    <div class="info-grid reveal" style="transition-delay:0.1s">
+      <div class="info-card">
+        <div class="info-label">Localisation</div>
+        <div class="info-value">Abidjan, Côte d'Ivoire</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Langues</div>
+        <div class="info-value">Français · Anglais (pro)</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Formation</div>
+        <div class="info-value">Développement Mobile &amp; Embarqué</div>
+      </div>
+      <div class="info-card" id="emailCopy" style="cursor:none">
+        <div class="info-label">Email <small style="color:#bbb;font-weight:400">(cliquer pour copier)</small></div>
+        <div class="info-value">stephanea872@gmail.com</div>
+      </div>
+      <div class="info-card" id="phoneCopy" style="cursor:none">
+        <div class="info-label">Téléphone <small style="color:#bbb;font-weight:400">(cliquer pour copier)</small></div>
+        <div class="info-value">+225 07 51 55 66 57</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Disponibilité</div>
+        <div class="info-value" style="color:#00C851">Disponible maintenant</div>
+      </div>
+    </div>
+
+    <div class="reveal" style="transition-delay:0.2s">
+      <div class="section-label" style="margin-bottom:20px">Mon approche</div>
+      <div class="values-list">
+        <div class="value-item">
+          <div class="value-num">01</div>
+          <div class="value-text">
+            <h4>Performance avant tout</h4>
+            <p>Chaque ligne de code est optimisée. Des apps rapides, légères et fluides sur tous les appareils.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">02</div>
+          <div class="value-text">
+            <h4>Design centré utilisateur</h4>
+            <p>L'interface doit être intuitive. Je pense UX dès la conception, pas en correction de tir.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">03</div>
+          <div class="value-text">
+            <h4>Intégration matériel-logiciel</h4>
+            <p>Mon atout différenciant : relier des capteurs physiques à des apps mobiles élégantes via IoT.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-strip reveal" style="transition-delay:0.3s">
+      <div class="cta-strip-text">
+        <h3>Travaillons ensemble ✦</h3>
+        <p>Un projet mobile, IoT ou embarqué ? Je suis disponible.</p>
+      </div>
+      <a href="contact.html" class="btn-cta"><i class="fa-regular fa-paper-plane"></i> Me contacter</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE 2 -->
+<div class="marquee-wrap">
+  <div class="marquee-row gold">
+    <div class="marquee-track rev">
+      <div class="m-item"><span class="star">✦</span> Performance</div>
+      <div class="m-item"><span class="star">✦</span> Créativité</div>
+      <div class="m-item"><span class="star">✦</span> Rigueur</div>
+      <div class="m-item"><span class="star">✦</span> Innovation</div>
+      <div class="m-item"><span class="star">✦</span> Collaboration</div>
+      <div class="m-item"><span class="star">✦</span> Passion</div>
+      <div class="m-item"><span class="star">✦</span> Excellence</div>
+      <div class="m-item"><span class="star">✦</span> Impact</div>
+    </div>
+    <div class="marquee-track rev" aria-hidden="true">
+      <div class="m-item"><span class="star">✦</span> Performance</div>
+      <div class="m-item"><span class="star">✦</span> Créativité</div>
+      <div class="m-item"><span class="star">✦</span> Rigueur</div>
+      <div class="m-item"><span class="star">✦</span> Innovation</div>
+      <div class="m-item"><span class="star">✦</span> Collaboration</div>
+      <div class="m-item"><span class="star">✦</span> Passion</div>
+      <div class="m-item"><span class="star">✦</span> Excellence</div>
+      <div class="m-item"><span class="star">✦</span> Impact</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* CURSOR */
+const dot = document.getElementById('cursorDot'), ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
+(function anim() { rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(anim); })();
+document.querySelectorAll('a, button, .float-badge, .info-card, .value-item, .btn-cta').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+/* SCROLL PROGRESS */
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollProgress').style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+}, { passive: true });
+
+/* NAV */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
+
+/* BACK TO TOP */
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => backTop.classList.toggle('visible', window.scrollY > 400), { passive: true });
+backTop.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+/* BURGER */
+const burger = document.getElementById('burger'), mobileNav = document.getElementById('mobileNav'), navOverlay = document.getElementById('navOverlay');
+function toggleNav(open) { burger.classList.toggle('open', open); mobileNav.classList.toggle('open', open); navOverlay.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; }
+burger.addEventListener('click', () => toggleNav(!burger.classList.contains('open')));
+navOverlay.addEventListener('click', () => toggleNav(false));
+document.querySelectorAll('.mobile-nav a').forEach(a => a.addEventListener('click', () => toggleNav(false)));
+
+/* TOAST */
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  document.getElementById('toastIcon').className = type === 'success' ? 'fa-regular fa-circle-check' : 'fa-regular fa-circle-xmark';
+  document.getElementById('toastText').textContent = msg;
+  t.className = 'toast show ' + type;
+  clearTimeout(t._t);
+  t._t = setTimeout(() => { t.className = 'toast'; }, 3500);
+}
+
+/* COPY */
+document.getElementById('emailCopy').addEventListener('click', () => navigator.clipboard.writeText('stephanea872@gmail.com').then(() => showToast('Email copié !')).catch(() => showToast('Erreur', 'error')));
+document.getElementById('phoneCopy').addEventListener('click', () => navigator.clipboard.writeText('+225 07 51 55 66 57').then(() => showToast('Numéro copié !')).catch(() => showToast('Erreur', 'error')));
+
+/* DOWNLOAD */
+document.getElementById('downloadCvBtn').addEventListener('click', e => {
+  e.preventDefault();
+  const a = document.createElement('a');
+  a.href = 'files/CV_Ange_Adje.pdf';
+  a.download = 'CV_Ange_Adje_Developpeur.pdf';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  showToast('Téléchargement du CV lancé !');
+});
+
+/* TYPED ROLE */
+const roleEl = document.getElementById('typedRole'), roleText = roleEl.textContent;
+roleEl.textContent = '';
+let ri = 0;
+setTimeout(() => {
+  const iv = setInterval(() => { roleEl.textContent += roleText[ri++]; if (ri >= roleText.length) clearInterval(iv); }, 55);
+}, 600);
+
+/* COUNTER */
+function animCounters() {
+  document.querySelectorAll('.hstat-num[data-target]').forEach(el => {
+    if (el.dataset.animated) return;
+    el.dataset.animated = '1';
+    const target = +el.dataset.target;
+    const hasSuffix = el.innerHTML.includes('+');
+    let cur = 0;
+    const step = Math.max(1, Math.floor(target / 40));
+    const iv = setInterval(() => {
+      cur = Math.min(cur + step, target);
+      el.innerHTML = cur + (hasSuffix ? '<span>+</span>' : '');
+      if (cur >= target) clearInterval(iv);
+    }, 30);
+  });
+}
+new IntersectionObserver(entries => { if (entries[0].isIntersecting) animCounters(); }, { threshold: 0.4 }).observe(document.querySelector('.about-hero'));
+
+/* REVEAL */
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+/* MARQUEE PAUSE */
+document.querySelectorAll('.marquee-track').forEach(t => {
+  t.addEventListener('mouseenter', () => t.style.animationPlayState = 'paused');
+  t.addEventListener('mouseleave', () => t.style.animationPlayState = 'running');
+});
+
+/* FLOAT BADGE CLICKS */
+const badgeMap = { b1: 'React Native — Cross-platform mobile', b2: 'ESP32 / IoT — Systèmes connectés', b3: 'Full-Stack Mobile — Front & Back' };
+document.querySelectorAll('.float-badge').forEach(b => {
+  const key = [...b.classList].find(c => badgeMap[c]);
+  if (key) b.addEventListener('click', () => showToast(badgeMap[key]));
+});
+</script>
+</body>
+</html>
