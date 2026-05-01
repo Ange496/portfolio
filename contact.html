@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
   <style>
     /* ============================
-       RESET & ROOT (Harmonisé avec skills)
+       RESET & ROOT
        ============================ */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -48,7 +48,7 @@
     a, button, .info-item, .faq-item, .contact-card, .btn-submit { cursor: none; }
 
     /* ============================
-       CUSTOM CURSOR (identique skills)
+       CUSTOM CURSOR
        ============================ */
     .cursor-dot {
       width: 8px; height: 8px;
@@ -83,7 +83,7 @@
     }
 
     /* ============================
-       NAVIGATION (identique skills)
+       NAVIGATION
        ============================ */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
@@ -191,7 +191,7 @@
     .nav-overlay.open { opacity: 1; visibility: visible; }
 
     /* ============================
-       PAGE HERO (identique skills)
+       PAGE HERO
        ============================ */
     .page-hero {
       min-height: 55vh;
@@ -300,7 +300,7 @@
     }
 
     /* ============================
-       CONTACT MAIN (amélioré)
+       CONTACT MAIN
        ============================ */
     .contact-body {
       padding: 56px 52px 80px;
@@ -310,7 +310,6 @@
       grid-template-columns: 1fr 1.2fr;
       gap: 48px;
     }
-    /* Contact Cards */
     .contact-card {
       background: var(--gray-light);
       border-radius: var(--radius-lg);
@@ -355,6 +354,7 @@
       font-size: 22px;
       color: var(--yellow);
       transition: var(--transition);
+      flex-shrink: 0;
     }
     .info-item:hover .info-icon {
       background: var(--yellow);
@@ -389,6 +389,7 @@
       font-size: 20px;
       color: var(--black);
       transition: var(--transition);
+      text-decoration: none;
     }
     .social-link:hover {
       background: var(--yellow);
@@ -424,7 +425,9 @@
       font-size: 14px;
       transition: var(--transition);
       outline: none;
+      color: var(--black);
     }
+    .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; padding-right: 44px; }
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus {
@@ -454,11 +457,12 @@
     .btn-submit {
       background: var(--black);
       color: var(--white);
-      border: none;
+      border: 2px solid var(--black);
       padding: 14px 28px;
       border-radius: 100px;
       font-size: 14px;
       font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
       transition: var(--transition);
       display: inline-flex;
       align-items: center;
@@ -466,26 +470,25 @@
       width: 100%;
       justify-content: center;
       margin-top: 16px;
-      border: 2px solid var(--black);
     }
     .btn-submit:hover {
       background: var(--yellow);
       color: var(--black);
+      border-color: var(--yellow);
       transform: translateY(-3px);
       box-shadow: var(--shadow-yellow);
     }
     .btn-submit:disabled {
       opacity: 0.6;
-      cursor: not-allowed;
+      pointer-events: none;
     }
+
     .form-success {
       display: none;
       text-align: center;
       padding: 40px 20px;
     }
-    .form-success.show {
-      display: block;
-    }
+    .form-success.show { display: block; }
     .form-success i {
       font-size: 56px;
       color: var(--success);
@@ -495,6 +498,11 @@
       font-family: 'Syne', sans-serif;
       font-size: 24px;
       margin-bottom: 12px;
+    }
+    .form-success p {
+      color: var(--gray-mid);
+      font-size: 14px;
+      line-height: 1.6;
     }
 
     /* ============================
@@ -517,9 +525,7 @@
       filter: grayscale(0.2);
       transition: filter 0.4s;
     }
-    .map-container:hover iframe {
-      filter: grayscale(0);
-    }
+    .map-container:hover iframe { filter: grayscale(0); }
     .map-overlay {
       position: absolute;
       bottom: 20px;
@@ -560,7 +566,6 @@
       border-radius: var(--radius-md);
       padding: 28px;
       transition: var(--transition);
-      cursor: pointer;
     }
     .faq-item:hover {
       transform: translateY(-4px);
@@ -575,10 +580,7 @@
       align-items: center;
       gap: 12px;
     }
-    .faq-question i {
-      color: var(--yellow);
-      font-size: 18px;
-    }
+    .faq-question i { color: var(--yellow); font-size: 18px; }
     .faq-answer {
       color: var(--gray-mid);
       line-height: 1.6;
@@ -586,7 +588,7 @@
     }
 
     /* ============================
-       MARQUEE (identique skills)
+       MARQUEE
        ============================ */
     .marquee-wrap { overflow: hidden; margin-top: 40px; }
     .marquee-row {
@@ -646,7 +648,7 @@
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: var(--black);
+      background: rgba(14,14,14,0.95);
       color: white;
       padding: 14px 24px;
       border-radius: 100px;
@@ -661,12 +663,9 @@
       align-items: center;
       gap: 12px;
       backdrop-filter: blur(10px);
-      background: rgba(14,14,14,0.95);
       pointer-events: none;
     }
-    .toast-notification.show {
-      transform: translateX(0);
-    }
+    .toast-notification.show { transform: translateX(0); }
     .toast-notification i { font-size: 18px; color: var(--yellow); }
 
     /* ============================
@@ -687,7 +686,8 @@
       .faq-section { padding: 0 24px 80px; }
       .section-title { font-size: 28px; }
       .faq-grid { grid-template-columns: 1fr; }
-      .toast-notification { left: 20px; right: 20px; width: auto; }
+      .toast-notification { left: 20px; right: 20px; bottom: 20px; width: auto; transform: translateY(200px); }
+      .toast-notification.show { transform: translateY(0); }
     }
   </style>
 </head>
@@ -698,7 +698,7 @@
 <div class="cursor-ring" id="cursorRing"></div>
 <a href="#" class="back-top" id="backTop"><i class="fa-solid fa-arrow-up"></i></a>
 
-<!-- Navigation (identique skills) -->
+<!-- Navigation -->
 <nav id="navbar">
   <a href="index.html" class="nav-logo">
     <img src="images/logo (2).png" alt="Logo" onerror="this.style.display='none'">
@@ -743,7 +743,7 @@
   </div>
 </div>
 
-<!-- Hero Section (identique skills) -->
+<!-- Hero Section -->
 <section class="page-hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
@@ -772,10 +772,11 @@
 <!-- Contact Main -->
 <main class="contact-body">
   <div class="contact-grid">
+
     <!-- Contact Info Card -->
     <div class="contact-card reveal">
       <h2 class="card-title">Me contacter</h2>
-      
+
       <div class="info-item" data-copy="stephanea872@gmail.com">
         <div class="info-icon"><i class="fa-regular fa-envelope"></i></div>
         <div class="info-content">
@@ -784,16 +785,16 @@
         </div>
       </div>
 
-      <div class="info-item" data-copy="+2250751556657">
-        <div class="info-icon"><i class="fa-regular fa-phone"></i></div>
+      <div class="info-item" data-copy="+2250715516653">
+        <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
         <div class="info-content">
           <h3>Téléphone / WhatsApp</h3>
-          <a href="tel:+2250751556657">+225 07 51 55 66 57</a>
+          <a href="tel:+2250715516653">+225 07 15 51 66 53 / +225 05 56 13 02 45</a>
         </div>
       </div>
 
       <div class="info-item">
-        <div class="info-icon"><i class="fa-regular fa-location-dot"></i></div>
+        <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
         <div class="info-content">
           <h3>Localisation</h3>
           <p>Abidjan, Côte d'Ivoire</p>
@@ -804,14 +805,14 @@
         <div class="info-icon"><i class="fa-regular fa-clock"></i></div>
         <div class="info-content">
           <h3>Disponibilité</h3>
-          <p>Lun - Ven : 9h - 18h<br>Urgences : 7j/7</p>
+          <p>Lun - Ven : 7h30 - 18h<br>Urgences : 7j/7</p>
         </div>
       </div>
 
       <div class="social-links">
         <a href="https://www.linkedin.com/in/ange-emmanuel-stephane-adj%C3%A9-0015472b9" target="_blank" class="social-link"><i class="fab fa-linkedin-in"></i></a>
         <a href="https://github.com/Ange496" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
-        <a href="https://tiktok.com/@nerix54" target="_blank" class="social-link"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.tiktok.com/@angedev8" target="_blank" class="social-link"><i class="fab fa-tiktok"></i></a>
       </div>
     </div>
 
@@ -819,22 +820,23 @@
     <div class="form-card reveal">
       <div id="formContainer">
         <h2 class="card-title">Envoyez-moi un message</h2>
-        <form id="contactForm" novalidate>
+
+        <form id="contactForm" action="https://formspree.io/f/mwpbkved" method="POST" novalidate>
           <div class="form-group" id="nameGroup">
             <label for="name">Nom complet *</label>
-            <input type="text" id="name" name="name" placeholder="Jean Kouassi">
+            <input type="text" id="name" name="name" placeholder="Jean Kouassi" required>
             <div class="error-message">Le nom est requis (minimum 2 caractères)</div>
           </div>
-          
+
           <div class="form-group" id="emailGroup">
             <label for="email">Email *</label>
-            <input type="email" id="email" name="email" placeholder="jean@exemple.com">
+            <input type="email" id="email" name="email" placeholder="jean@exemple.com" required>
             <div class="error-message">Veuillez entrer un email valide</div>
           </div>
-          
+
           <div class="form-group" id="subjectGroup">
             <label for="subject">Sujet *</label>
-            <select id="subject" name="subject">
+            <select id="subject" name="subject" required>
               <option value="">Sélectionnez un sujet</option>
               <option value="devis">Demande de devis</option>
               <option value="projet">Proposition de projet</option>
@@ -843,14 +845,17 @@
             </select>
             <div class="error-message">Veuillez sélectionner un sujet</div>
           </div>
-          
+
           <div class="form-group" id="messageGroup">
             <label for="message">Message *</label>
-            <textarea id="message" name="message" placeholder="Décrivez votre projet ou votre demande..." maxlength="500" rows="5"></textarea>
+            <textarea id="message" name="message" placeholder="Décrivez votre projet ou votre demande..." maxlength="500" rows="5" required></textarea>
             <div class="char-counter"><span id="charCount">0</span>/500 caractères</div>
-            <div class="error-message">Le message est requis</div>
+            <div class="error-message">Le message est requis (minimum 10 caractères)</div>
           </div>
-          
+
+          <!-- Champ anti-spam Formspree -->
+          <input type="text" name="_gotcha" style="display:none">
+
           <button type="submit" class="btn-submit" id="submitBtn">
             <i class="fa-regular fa-paper-plane"></i>
             <span>Envoyer le message</span>
@@ -858,14 +863,18 @@
         </form>
         <p style="font-size: 12px; color: var(--gray-mid); margin-top: 20px;">* Champs requis. Je réponds sous 24h en général.</p>
       </div>
-      
+
       <div class="form-success" id="formSuccess">
         <i class="fa-regular fa-circle-check"></i>
         <h3>Message envoyé !</h3>
         <p>Merci pour votre message. Je vous répondrai dans les plus brefs délais.</p>
-        <button class="btn-submit" style="margin-top: 20px;" onclick="resetForm()">Envoyer un autre message</button>
+        <button class="btn-submit" style="margin-top: 20px;" onclick="resetForm()">
+          <i class="fa-regular fa-paper-plane"></i>
+          <span>Envoyer un autre message</span>
+        </button>
       </div>
     </div>
+
   </div>
 </main>
 
@@ -874,7 +883,7 @@
   <div class="map-container reveal">
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.5!2d-4.0167!3d5.3167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfc1e9a1b7e2d3b7%3A0x5f4e6b8f3c5a4d2!2sAbidjan%2C%20C%C3%B4te%20d&#39;Ivoire!5e0!3m2!1sfr!2sfr!4v1710000000000!5m2!1sfr!2sfr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     <div class="map-overlay">
-      <i class="fa-regular fa-location-dot"></i>
+      <i class="fa-solid fa-location-dot"></i>
       <span>Abidjan, Côte d'Ivoire</span>
     </div>
   </div>
@@ -908,6 +917,23 @@
       <div class="m-item"><span class="star">✦</span> Devis gratuit</div>
       <div class="m-item"><span class="star">✦</span> Support inclus</div>
       <div class="m-item"><span class="star">✦</span> Satisfaction garantie</div>
+      <div class="m-item"><span class="star">✦</span> Disponible pour vos projets</div>
+      <div class="m-item"><span class="star">✦</span> Réponse sous 24h</div>
+      <div class="m-item"><span class="star">✦</span> Devis gratuit</div>
+      <div class="m-item"><span class="star">✦</span> Support inclus</div>
+      <div class="m-item"><span class="star">✦</span> Satisfaction garantie</div>
+    </div>
+    <div class="marquee-track" aria-hidden="true">
+      <div class="m-item"><span class="star">✦</span> Disponible pour vos projets</div>
+      <div class="m-item"><span class="star">✦</span> Réponse sous 24h</div>
+      <div class="m-item"><span class="star">✦</span> Devis gratuit</div>
+      <div class="m-item"><span class="star">✦</span> Support inclus</div>
+      <div class="m-item"><span class="star">✦</span> Satisfaction garantie</div>
+      <div class="m-item"><span class="star">✦</span> Disponible pour vos projets</div>
+      <div class="m-item"><span class="star">✦</span> Réponse sous 24h</div>
+      <div class="m-item"><span class="star">✦</span> Devis gratuit</div>
+      <div class="m-item"><span class="star">✦</span> Support inclus</div>
+      <div class="m-item"><span class="star">✦</span> Satisfaction garantie</div>
     </div>
   </div>
 </div>
@@ -919,65 +945,98 @@
 </div>
 
 <script>
-// ==================== SCRIPTS COMMUNS (identique skills) ====================
+// ==================== CURSOR ====================
 const dot = document.getElementById('cursorDot');
 const ring = document.getElementById('cursorRing');
 let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
-function animRing() { rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); }
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+});
+function animRing() {
+  rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
 animRing();
-document.querySelectorAll('a, button, .info-item, .faq-item, .social-link, .filter-btn').forEach(el => {
+document.querySelectorAll('a, button, .info-item, .faq-item, .social-link').forEach(el => {
   el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
   el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
 });
 
+// ==================== SCROLL ====================
 const progress = document.getElementById('scrollProgress');
-window.addEventListener('scroll', () => { const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100; progress.style.width = pct + '%'; });
-
 const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
-
 const backTop = document.getElementById('backTop');
-window.addEventListener('scroll', () => backTop.classList.toggle('visible', window.scrollY > 400));
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  progress.style.width = pct + '%';
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+  backTop.classList.toggle('visible', window.scrollY > 400);
+});
 backTop.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
+// ==================== MOBILE NAV ====================
 const burger = document.getElementById('burger');
 const mobileNav = document.getElementById('mobileNav');
 const navOverlay = document.getElementById('navOverlay');
-function toggleNav(open) { burger.classList.toggle('open', open); mobileNav.classList.toggle('open', open); navOverlay.classList.toggle('open', open); document.body.style.overflow = open ? 'hidden' : ''; }
+function toggleNav(open) {
+  burger.classList.toggle('open', open);
+  mobileNav.classList.toggle('open', open);
+  navOverlay.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
 burger.addEventListener('click', () => toggleNav(!burger.classList.contains('open')));
 navOverlay.addEventListener('click', () => toggleNav(false));
 document.querySelectorAll('.mobile-nav a').forEach(a => a.addEventListener('click', () => toggleNav(false)));
 
-// Reveal on scroll
+// ==================== REVEAL ====================
 const revealObs = new IntersectionObserver(entries => {
   entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-// Marquee pause on hover
+// ==================== MARQUEE ====================
 document.querySelectorAll('.marquee-track').forEach(t => {
   t.addEventListener('mouseenter', () => t.style.animationPlayState = 'paused');
   t.addEventListener('mouseleave', () => t.style.animationPlayState = 'running');
 });
 
-// Toast notification
+// ==================== TOAST ====================
 const toast = document.getElementById('toast');
 const toastMessage = document.getElementById('toastMessage');
-function showToast(message) {
+let toastTimer;
+function showToast(message, isError = false) {
+  clearTimeout(toastTimer);
   toastMessage.textContent = message;
+  toast.querySelector('i').className = isError ? 'fas fa-times-circle' : 'fas fa-check-circle';
+  toast.style.borderLeftColor = isError ? 'var(--error)' : 'var(--yellow)';
   toast.classList.add('show');
-  setTimeout(() => { toast.classList.remove('show'); }, 3000);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
 }
 
-// Copie des coordonnées
+// ==================== COPIE COORDONNEES ====================
 document.querySelectorAll('.info-item[data-copy]').forEach(item => {
   item.addEventListener('click', () => {
-    const text = item.dataset.copy;
-    navigator.clipboard.writeText(text);
-    showToast(`"${text}" copié dans le presse-papier ✨`);
+    navigator.clipboard.writeText(item.dataset.copy)
+      .then(() => showToast(`"${item.dataset.copy}" copié `))
+      .catch(() => showToast('Impossible de copier', true));
   });
 });
+
+// ==================== TYPING EFFECT ====================
+const headerDesc = document.querySelector('.page-desc');
+if (headerDesc) {
+  const originalText = headerDesc.textContent;
+  headerDesc.textContent = '';
+  let i = 0;
+  setTimeout(() => {
+    const interval = setInterval(() => {
+      if (i < originalText.length) { headerDesc.textContent += originalText[i++]; }
+      else { clearInterval(interval); }
+    }, 25);
+  }, 300);
+}
 
 // ==================== FORMULAIRE ====================
 const form = document.getElementById('contactForm');
@@ -990,6 +1049,10 @@ const subjectSelect = document.getElementById('subject');
 const submitBtn = document.getElementById('submitBtn');
 const charCount = document.getElementById('charCount');
 
+// Compteur caractères
+messageInput.addEventListener('input', () => { charCount.textContent = messageInput.value.length; });
+
+// Reset formulaire
 window.resetForm = function() {
   formSuccess.classList.remove('show');
   formContainer.style.display = 'block';
@@ -998,61 +1061,78 @@ window.resetForm = function() {
   document.querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
 };
 
-messageInput.addEventListener('input', () => { charCount.textContent = messageInput.value.length; });
-
-function validateField(input, type = 'text') {
+// Validation champ
+function validateField(input) {
   const group = input.closest('.form-group');
   const value = input.value.trim();
-  if (!value && input.required) { group.classList.add('error'); return false; }
-  if (type === 'email') {
+
+  if (input.tagName === 'SELECT') {
+    if (!value) { group.classList.add('error'); return false; }
+  } else if (input.type === 'email') {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(value)) { group.classList.add('error'); return false; }
+  } else if (input.tagName === 'TEXTAREA') {
+    if (value.length < 10) { group.classList.add('error'); return false; }
+  } else {
+    if (value.length < 2) { group.classList.add('error'); return false; }
   }
-  if (input.tagName === 'SELECT' && !value) { group.classList.add('error'); return false; }
-  if (value.length < 2 && input.required && input.type !== 'email') { group.classList.add('error'); return false; }
+
   group.classList.remove('error');
   return true;
 }
 
-nameInput.addEventListener('input', () => validateField(nameInput));
-emailInput.addEventListener('input', () => validateField(emailInput, 'email'));
-messageInput.addEventListener('input', () => validateField(messageInput));
+// Validation temps réel
+nameInput.addEventListener('blur', () => validateField(nameInput));
+emailInput.addEventListener('blur', () => validateField(emailInput));
+messageInput.addEventListener('blur', () => validateField(messageInput));
 subjectSelect.addEventListener('change', () => validateField(subjectSelect));
+nameInput.addEventListener('input', () => { if (nameInput.closest('.form-group').classList.contains('error')) validateField(nameInput); });
+emailInput.addEventListener('input', () => { if (emailInput.closest('.form-group').classList.contains('error')) validateField(emailInput); });
 
+// ✅ Soumission via Formspree (fetch + JSON)
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const isValid = validateField(nameInput) && validateField(emailInput, 'email') && validateField(messageInput) && validateField(subjectSelect);
-  
-  if (isValid) {
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fa-regular fa-spinner fa-spin"></i> Envoi en cours...';
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    formContainer.style.display = 'none';
-    formSuccess.classList.add('show');
-    showToast('Message envoyé avec succès ! ✨');
+
+  const isValid =
+    validateField(nameInput) &
+    validateField(emailInput) &
+    validateField(messageInput) &
+    validateField(subjectSelect);
+
+  if (!isValid) {
+    showToast('Veuillez remplir tous les champs correctement.', true);
+    return;
+  }
+
+  // UI — chargement
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Envoi en cours...</span>';
+
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      // Succès
+      formContainer.style.display = 'none';
+      formSuccess.classList.add('show');
+      showToast('Message envoyé avec succès Merci de m\'avoir contacté.');
+    } else {
+      // Erreur serveur Formspree
+      const data = await response.json();
+      const msg = (data.errors && data.errors.map(e => e.message).join(', ')) || 'Erreur lors de l\'envoi.';
+      showToast(msg, true);
+    }
+  } catch (err) {
+    showToast('Problème de connexion. Réessaie plus tard.', true);
+  } finally {
     submitBtn.disabled = false;
-    submitBtn.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Envoyer le message';
-  } else {
-    showToast('Veuillez remplir tous les champs correctement.');
+    submitBtn.innerHTML = '<i class="fa-regular fa-paper-plane"></i> <span>Envoyer le message</span>';
   }
 });
-
-// Effet de typing
-const headerDesc = document.querySelector('.page-desc');
-if (headerDesc) {
-  const originalText = headerDesc.textContent;
-  headerDesc.textContent = '';
-  let i = 0;
-  setTimeout(() => {
-    const interval = setInterval(() => {
-      if (i < originalText.length) {
-        headerDesc.textContent += originalText[i++];
-      } else {
-        clearInterval(interval);
-      }
-    }, 25);
-  }, 300);
-}
 </script>
 </body>
 </html>
